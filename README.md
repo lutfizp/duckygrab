@@ -51,8 +51,8 @@ Edit `payload.txt` before compiling:
 
 ## Decrypt
 
-Chromium: requires `Login Data` + `Local State` (DPAPI + AES-256-GCM). Decrypt with [HackBrowserData](https://github.com/niclaslindstedt/go-browser-data) or `sqlite3` + `pycryptodome`. Must run on the same user account or with the DPAPI master key.
-Firefox: requires `logins.json` + `key4.db`. Decrypt with [firefox_decrypt](https://github.com/unode/firefox_decrypt).
+Chromium: requires `Login Data` + `Local State` (DPAPI + AES-256-GCM). Decrypt with [HackBrowserData](https://github.com/moond4rk/HackBrowserData) or `sqlite3` + `pycryptodome`. Must run on the same user account or with the DPAPI master key.
+Firefox: requires `logins.json` + `key4.db`. Decrypt with [firefox_decrypt](https://github.com/unode/firefox_decrypt/).
 
 ## Notes
 - No admin/UAC required
